@@ -29,6 +29,16 @@ export const useProfileStore = defineStore('profile', {
             this.allLikesCount()
           },
 
+          allLikesCount() {
+            this.allLikes = 0
+            for (let i = 0; i < this.posts.length; i++) {
+                const post = this.posts[i];
+                 for (let j = 0; j < post.likes.length; j++) {
+                    this.allLikes++
+                 }
+            }
+        },
+
           resetUser() {      
             this.$state.id = ''
             this.$state.name = ''

@@ -12,7 +12,7 @@ class GlobalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function getRandomUser()
+    public function getRandomUsers()
     {
         try {
             $suggested = User::inRandomOrder()->limit(5)->get();

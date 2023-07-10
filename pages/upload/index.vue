@@ -1,11 +1,12 @@
-<template>
+<template>    
+
     <UploadError :errorType="errorType"/>
 
-    <div
+    <div 
         v-if="isUploading"
         class="fixed flex items-center justify-center top-0 left-0 w-full h-screen bg-black z-50 bg-opacity-50"
     >
-    <Icon class="animate-spin ml-1" name="mingcute:loading-line" size="100" color="#FFFFFF"/>
+        <Icon class="animate-spin ml-1" name="mingcute:loading-line" size="100" color="#FFFFFF"/>
     </div>
 
     <UploadLayout>
@@ -15,10 +16,10 @@
                 <div class="text-gray-400 mt-1">Post a video to your account</div>
             </div>
 
-
             <div class="mt-8 md:flex gap-6">
+
                 <label 
-                v-if="!fileDisplay"
+                    v-if="!fileDisplay"
                     for="fileInput"
                     @drop.prevent="onDrop" 
                     @dragover.prevent=""
@@ -44,7 +45,7 @@
                         cursor-pointer
                     "
                 >
-<Icon name="majesticons:cloud-upload" size="40" color="#b3b3b1"/>
+                    <Icon name="majesticons:cloud-upload" size="40" color="#b3b3b1"/>
                     <div class="mt-4 text-[17px]">Select video to upload</div>
                     <div class="mt-1.5 text-gray-500 text-[13px]">Or drag and drop a file</div>
                     <div class="mt-12 text-gray-400 text-sm">MP4</div>
@@ -59,13 +60,13 @@
                         id="fileInput"
                         @input="onChange" 
                         hidden 
-                        accept=".mp4, .m4v, .MP4" 
-                        >
+                        accept=".mp4" 
+                    />
+                </label>
 
-            </label>
-            <div 
-                v-else
-                class="
+                <div
+                    v-else
+                    class="
                         md:mx-0
                         mx-auto
                         mt-4
@@ -81,9 +82,9 @@
                         rounded-2xl
                         cursor-pointer
                         relative
-                    "   
-            >
-            <div class="bg-black h-full w-full" />
+                    "
+                >
+                    <div class="bg-black h-full w-full" />
                     <img 
                         class="absolute z-20 pointer-events-none" 
                         src="~/assets/images/mobile-case.png"
@@ -104,17 +105,14 @@
                     <div class="absolute -bottom-12 flex items-center justify-between z-50 rounded-xl border w-full p-2 border-gray-300">
                         <div class="flex items-center truncate">
                             <Icon name="clarity:success-standard-line" size="16" class="min-w-[16px]"/>
-                            <div class="text-[11px] pl-1 truncate text-ellipsis">{{fileData.name}}</div>
+                            <div class="text-[11px] pl-1 truncate text-ellipsis">{{ fileData.name }}</div>
                         </div>
-                        <button  
-                        @click="clearVideo()"
-                        class="text-[11px] ml-2 font-semibold">
+                        <button @click="clearVideo" class="text-[11px] ml-2 font-semibold">
                             Change
                         </button>
                     </div>
-                </div>    
-                
-                
+                </div>
+
                 <div class="mt-4 mb-6">
                     <div class="flex bg-[#F8F8F8] py-4 px-6">
                         <div>
@@ -136,7 +134,7 @@
                     <div class="mt-5">
                         <div class="flex items-center justify-between">
                             <div class="mb-1 text-[15px]">Caption</div>
-                            <div class="text-gray-400 text-[12px]">{{caption.length}}/150</div>
+                            <div class="text-gray-400 text-[12px]">{{ caption.length }}/150</div>
                         </div>
                         <input 
                             v-model="caption"
@@ -151,10 +149,12 @@
                             "
                         >
                     </div>
+
                     <div class="flex gap-3">
                         <button 
-                        @click="discard()"
-                        class="px-10 py-2.5 mt-8 border text-[16px] hover:bg-gray-100 rounded-sm">
+                            @click="discard()"
+                            class="px-10 py-2.5 mt-8 border text-[16px] hover:bg-gray-100 rounded-sm"
+                        >
                             Discard
                         </button>
                         <button 
@@ -169,17 +169,15 @@
                         <div class="text-red-600" v-if="errors && errors.video">
                             {{ errors.video[0] }}
                         </div>
-
                         <div class="text-red-600" v-if="errors && errors.text">
                             {{ errors.text[0] }}
                         </div>
                     </div>
 
                 </div>
-            </div>
 
+            </div>
         </div>
-        
     </UploadLayout>
 </template>
 
@@ -197,6 +195,7 @@ let fileData = ref(null)
 let errors = ref(null)
 let isUploading = ref(false)
 
+definePageMeta({ middleware: 'auth' })
 
 watch(() => caption.value, (caption) => {
     if (caption.length >= 150) {
@@ -218,7 +217,7 @@ const onDrop = (e) => {
 
     let extention = file.value.name.substring(file.value.name.lastIndexOf('.') + 1);
 
-    if (extention !== 'mp4' ) {
+    if (extention !== 'mp4') {
         errorType.value = 'file'
         return
     }
@@ -264,5 +263,4 @@ const clearVideo = () => {
     fileDisplay.value = null
     fileData.value = null
 }
-
 </script>

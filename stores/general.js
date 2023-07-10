@@ -58,6 +58,25 @@ export const useGeneralStore = defineStore('general', {
             })
           },
 
+          async getPostById(id) {
+            let res = await $axios.get(`/api/posts/${id}`)
+      
+            this.$state.selectedPost = res.data.post[0]
+            this.$state.ids = res.data.ids
+          },
+
+          async getRandomUsers(type) {
+            let res = await $axios.get(`/api/get-random-users`)
+      
+            if (type === 'suggested') {
+              this.suggested = res.data.suggested
+            }
+      
+            if (type === 'following') {
+              this.following = res.data.following
+            }
+          },
+
           updateSideMenuImage(array, user) {
             for (let i = 0; i < array.length; i++) {
               const res = array[i];
@@ -67,6 +86,10 @@ export const useGeneralStore = defineStore('general', {
             }
           },
 
+          async getAllUsersAndPosts() {
+            let res = await $axios.get('/api/home')
+            this.posts = res.data
+          }
     },
 
     persist: true

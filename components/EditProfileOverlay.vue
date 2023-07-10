@@ -224,6 +224,23 @@ const cropAndUpdateImage = async () => {
     }
 }
 
+const updateUserInfo = async () => {
+    try {
+        await $userStore.updateUser(userName.value, userBio.value)
+        await $userStore.getUser()
+        await $profileStore.getProfile(route.params.id)
+
+        userName.value = name.value
+        userBio.value = bio.value
+
+        setTimeout(() => {
+            $generalStore.isEditProfileOpen = false
+        }, 100)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 watch(() => userName.value, () => {
     if (!userName.value || userName.value === name.value) {
         isUpdated.value = false
