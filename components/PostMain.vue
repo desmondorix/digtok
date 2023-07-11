@@ -42,7 +42,7 @@
                     <img 
                         class="absolute right-2 bottom-14" 
                         width="90" 
-                        src="~/assets/images/tiktok-logo-white.png"
+                        src="~/assets/images/digtok-wm.png"
                     >
                 </div>
                 <div class="relative mr-[75px]">
